@@ -1,0 +1,62 @@
+---
+# Server Configuration
+server: 10.96.35.200
+username: arnob
+password: N@98sDS@t
+valid_certs: no
+partition:
+  - CPS_UAT
+  - CPS_SIT01
+  - CPS_SIT02
+selected_partition: CPS_UAT
+
+# Node Configuration
+nodes:
+  - name: "node1_beta_test"
+    ip: "10.77.26.147"
+    port: "80"
+  - name: "node2_beta_test"
+    ip: "10.77.26.148"
+    port: "8080"
+
+# Pool Configuration
+pool_name: "pool-beta_test"
+pool_lb: "round-robin"
+
+# VIP Configuration
+vip_name: "vs-beta_test"
+vip_ip: "10.96.49.155"
+vip_port: "443"
+vlans:
+  - /Common/VLAN-CPS-SIT01-VIP-MZ
+  - /Common/VLAN-CPS-SIT02-VIP-MZ
+  - /Common/VLAN-CPS-UAT-VIP-DMZ
+  - /Common/VLAN-CPS-UAT-VIP-MZ
+
+selected_vlans:
+  - /Common/VLAN-CPS-UAT-VIP-MZ
+
+# SSL Profile Configuration
+create_client_ssl: true  
+create_server_ssl: False  
+client_ssl_profile: "clientssl-cps-test"
+server_ssl_profile: "serverssl-cps-test"
+
+# SNAT Pool Configuration
+snat_pool_name: "snat-cps-test"
+snat_ip: 10.96.49.155
+
+# Route Configuration
+create_routes: True
+route_netmask: "255.255.255.255"
+route_gateway: "10.96.47.1"
+
+# State
+state: "present"
+
+# Common Provider Configuration
+common_provider:
+  password: "{{ password }}"
+  server: "{{ server }}"
+  user: "{{ username }}"
+  validate_certs: "{{ valid_certs }}"

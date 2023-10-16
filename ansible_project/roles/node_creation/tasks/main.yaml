@@ -1,0 +1,10 @@
+---
+- name: Create Nodes
+  bigip_node:
+    name: "{{ item.name }}"
+    address: "{{ item.ip }}"
+    partition: "{{ selected_partition }}"
+    state: "{{ state }}"
+    provider: "{{ common_provider }}"
+  delegate_to: localhost
+  loop: "{{ nodes }}"

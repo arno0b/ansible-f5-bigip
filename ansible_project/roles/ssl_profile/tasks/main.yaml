@@ -1,0 +1,36 @@
+---
+- name: Create Client SSL Profile
+  bigip_profile_client_ssl:
+    name: "{{ client_ssl_profile }}"
+    cert_key_chain:
+      - cert: /Common/wildcard.bkash.com_renew_2023
+        chain: /Common/GS-WildCard-Bundle_2023
+        key: /Common/wildcard.bkash.com_renew_2023
+        true_names: yes
+    client_certificate: "ignore"
+    ciphers: "none"
+    cipher_group: "/Common/f5-secure"
+    options:
+      - "no-sslv3"
+      - "no-tlsv1.1"
+      - "no-tlsv1.2"
+    partition: "{{ selected_partition }}"
+    state: "{{ state }}"
+    provider: "{{ common_provider }}"
+  delegate_to: localhost
+  when: create_client_ssl
+
+- name: Create Server SSL Profile
+  bigip_profile_server_ssl:
+    name: "{{ server_ssl_profile }}"
+    certificate: /Common/wildcard.bkash.com_renew_2023
+    chain: /Common/GS-WildCard-Bundle_2023
+    key: /Common/wildcard.bkash.com_renew_2023
+    ciphers: "none"
+    cipher_group: "/Common/f5-secure"
+    server_certificate: "ignore"
+    partition: "{{ selected_partition }}"
+    state: "{{ state }}"
+    provider: "{{ common_provider }}"
+  delegate_to: localhost
+  when: create_server_ssl
