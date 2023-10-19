@@ -1,0 +1,8 @@
+---
+- name: Define common provider
+  set_fact:
+    common_provider:
+      password: "{{ password }}"
+      server: "{{ server }}"
+      user: "{{ username }}"
+      validate_certs: "{{ valid_certs }}"

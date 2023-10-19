@@ -1,0 +1,16 @@
+---
+
+- name: "Configure F5 BIG-IP"
+  hosts: cps_lab_f5
+  gather_facts: False
+  vars_files:
+    - /root/ansible_project/group_vars/f5_vars.yaml  
+    - /root/ansible_project/secret.yaml  
+  roles:
+    - common  
+    - node_creation  
+    - pool_management  
+    - ssl_profile  
+    - route_creation 
+    - snat_pool_creation  
+    - create_virtual_server 

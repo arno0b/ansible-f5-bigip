@@ -1,0 +1,18 @@
+---
+- name: Create VIP
+  bigip_virtual_server:
+    state: "{{ state }}"
+    partition: "{{ selected_partition }}"
+    name: "{{ vip_name }}"
+    destination: "{{ vip_ip }}"
+    port: "{{ vip_port }}"
+    snat: "{{ snat_pool_name }}"
+    profiles:
+      - name: "/{{ selected_partition }}/{{ client_ssl_profile }}"
+        context: client-side
+      - name: "/{{ selected_partition }}/{{ server_ssl_profile }}"
+        context: server-side
+    enabled_vlans: "{{ selected_vlan }}"
+    pool: "{{ pool_name }}"
+    provider: "{{ common_provider }}"
+  delegate_to: localhost

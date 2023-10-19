@@ -1,0 +1,10 @@
+---
+- name: Create SNAT Pool
+  bigip_snat_pool:
+    name: "{{ snat_pool_name }}"
+    members:
+      - "{{ snat_ip }}"
+    partition: "{{ selected_partition }}"
+    state: "{{ state }}"
+    provider: "{{ common_provider }}"
+  delegate_to: localhost

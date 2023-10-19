@@ -1,0 +1,14 @@
+---
+- name: Create Route
+  bigip_static_route:
+    name: "route-{{ item.route_name }}"
+    destination: "{{ item.ip }}"
+    netmask: "{{ 255.255.255.255 }}"
+    gateway_address: "{{ selected_gateway }}"
+    state: "{{ state }}"
+    partition: "{{ selected_partition }}"
+    provider: "{{ common_provider }}"
+  delegate_to: localhost
+  loop: "{{ entries }}"
+
+
