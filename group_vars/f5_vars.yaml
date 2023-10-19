@@ -1,8 +1,8 @@
 ---
 # Credentials and server information
-server: "10.96.35.200"
-username: "arnob"
-password: "N@98sDS@t"
+server: "10.96.34.280"
+username: "ar324b"
+password: "234234234"
 valid_certs: no
 selected_partition: "CPS_UAT"
 
