@@ -4,8 +4,8 @@
   hosts: cps_lab_f5
   gather_facts: False
   vars_files:
-    - /group_vars/f5_vars.yaml  
-    - secret.yaml  
+    - /root/ansible_project/group_vars/f5_vars.yaml  
+    - /root/ansible_project/secret.yaml  
   roles:
     - common  
     - node_creation  

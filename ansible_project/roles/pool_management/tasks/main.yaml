@@ -1,0 +1,21 @@
+---
+- name: Create Pool
+  bigip_pool:
+    name: "{{ pool_name }}"
+    lb_method: "{{ pool_lb }}"
+    partition: "{{ selected_partition }}"
+    state: "{{ state }}"
+    provider: "{{ common_provider }}"
+  delegate_to: localhost
+
+- name: Add Node to Pool
+  bigip_pool_member:
+    pool: "{{ pool_name }}"
+    partition: "{{ selected_partition }}"
+    name: "{{ item.node_name }}"
+    host: "{{ item.ip }}"
+    port: "{{ item.port }}"
+    state: "{{ state }}"
+    provider: "{{ common_provider }}"
+  delegate_to: localhost
+  loop: "{{ entries }}"

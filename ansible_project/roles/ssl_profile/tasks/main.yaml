@@ -7,13 +7,14 @@
         chain: /Common/GS-WildCard-Bundle_2023
         key: /Common/wildcard.bkash.com_renew_2023
         true_names: yes
-    client_certificate: "ignore"
+    client_certificate: "{{ client_cert_require }}"
     ciphers: "none"
     cipher_group: "/Common/f5-secure"
     options:
       - "no-sslv3"
       - "no-tlsv1.1"
       - "no-tlsv1.2"
+    trusted_cert_authority: "{{ trusted_ca_client_auth_file if use_client_trusted_cert_authority else omit }}"
     partition: "{{ selected_partition }}"
     state: "{{ state }}"
     provider: "{{ common_provider }}"
@@ -28,7 +29,7 @@
     key: /Common/wildcard.bkash.com_renew_2023
     ciphers: "none"
     cipher_group: "/Common/f5-secure"
-    server_certificate: "ignore"
+    server_certificate: "{{ server_cert_require }}"
     partition: "{{ selected_partition }}"
     state: "{{ state }}"
     provider: "{{ common_provider }}"

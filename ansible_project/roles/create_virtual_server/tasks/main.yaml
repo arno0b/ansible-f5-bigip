@@ -8,12 +8,11 @@
     port: "{{ vip_port }}"
     snat: "{{ snat_pool_name }}"
     profiles:
-      - name: "/{{ partition }}/{{ client_ssl_profile }}"
+      - name: "/{{ selected_partition }}/{{ client_ssl_profile }}"
         context: client-side
-      - name: "/{{ partition }}/{{ server_ssl_profile }}"
+      - name: "/{{ selected_partition }}/{{ server_ssl_profile }}"
         context: server-side
-    enabled_vlans: "{{ selected_vlans }}"
+    enabled_vlans: "{{ selected_vlan }}"
     pool: "{{ pool_name }}"
     provider: "{{ common_provider }}"
   delegate_to: localhost
-

@@ -1,55 +1,60 @@
 ---
-# Server Configuration
-server: 10.96.35.200
-username: arnob
-password: N@98sDS@t
+# Credentials and server information
+server: "10.96.35.200"
+username: "arnob"
+password: "N@98sDS@t"
 valid_certs: no
-partition:
-  - CPS_UAT
-  - CPS_SIT01
-  - CPS_SIT02
-selected_partition: CPS_UAT
+selected_partition: "CPS_UAT"
 
+# VLAN Mapping
+vlan_gateway_mapping:
+  "/Common/VLAN-CPS-UAT-VIP-MZ": "10.96.13.1"
+  "/Common/VLAN-CPS-SIT01-VIP-MZ": "10.96.47.1"
+  "/Common/VLAN-CPS-SIT02-VIP-MZ": "10.96.48.1"
+
+# Prefix for object naming
+obj_name: "alpha-test"
+
+# Selected VLAN
+selected_vlan: "/Common/VLAN-CPS-UAT-VIP-MZ"
+selected_gateway: "{{ vlan_gateway_mapping[selected_vlan] }}"
 # Node Configuration
-nodes:
-  - name: "node1_beta_test"
-    ip: "10.77.26.147"
+entries:
+  - node_name: "node1-{{ obj_name }}"
+    route_name: "route1-{{ obj_name }}"
+    ip: "10.34.26.59"
     port: "80"
-  - name: "node2_beta_test"
-    ip: "10.77.26.148"
+  - node_name: "node2-{{ obj_name }}"
+    route_name: "route2-{{ obj_name }}"
+    ip: "10.34.19.12"
     port: "8080"
 
+
 # Pool Configuration
-pool_name: "pool-beta_test"
+pool_name: "pool-{{ obj_name }}"
 pool_lb: "round-robin"
-
-# VIP Configuration
-vip_name: "vs-beta_test"
-vip_ip: "10.96.49.155"
-vip_port: "443"
-vlans:
-  - /Common/VLAN-CPS-SIT01-VIP-MZ
-  - /Common/VLAN-CPS-SIT02-VIP-MZ
-  - /Common/VLAN-CPS-UAT-VIP-DMZ
-  - /Common/VLAN-CPS-UAT-VIP-MZ
-
-selected_vlans:
-  - /Common/VLAN-CPS-UAT-VIP-MZ
 
 # SSL Profile Configuration
 create_client_ssl: true  
-create_server_ssl: False  
-client_ssl_profile: "clientssl-cps-test"
-server_ssl_profile: "serverssl-cps-test"
+create_server_ssl: true  
+
+client_ssl_profile: "clientssl-{{ obj_name }}"
+client_cert_require: "ignore"     #"ignore", "require", "request"
+use_client_trusted_cert_authority: false
+trusted_ca_client_auth_file: "/Common/uat-corapi-int.crt"
+
+server_ssl_profile: "serverssl-{{ obj_name }}"
+server_cert_require: "require"    #"ignore", "require", "request"
+
 
 # SNAT Pool Configuration
-snat_pool_name: "snat-cps-test"
-snat_ip: 10.96.49.155
+snat_pool_name: "snat-{{ obj_name }}"
+snat_ip: 10.96.49.135
 
-# Route Configuration
-create_routes: True
-route_netmask: "255.255.255.255"
-route_gateway: "10.96.47.1"
+# VIP Configuration
+vip_name: "vs-{{ obj_name }}"
+vip_ip: "10.96.49.135"
+vip_port: "443"
 
 # State
 state: "present"
