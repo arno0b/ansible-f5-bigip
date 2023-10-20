@@ -14,6 +14,7 @@ vlan_gateway_mapping:
 
 # Prefix for object naming
 obj_name: "alpha-test"
+address_type: "fqdn"  # Set to "fqdn" to use FQDNs
 
 # Selected VLAN
 selected_vlan: "/Common/VLAN-CPS-UAT-VIP-MZ"
@@ -23,12 +24,17 @@ entries:
   - node_name: "node1-{{ obj_name }}"
     route_name: "route1-{{ obj_name }}"
     ip: "10.34.26.59"
+    fqdn: "alb.test.bka.sh"
     port: "80"
   - node_name: "node2-{{ obj_name }}"
     route_name: "route2-{{ obj_name }}"
     ip: "10.34.19.12"
+    fqdn: "node1.example.com"
     port: "8080"
 
+
+ip_netmask: "255.255.255.255"
+fqdn_netmask: "255.255.255.0"
 
 # Pool Configuration
 pool_name: "pool-{{ obj_name }}"
@@ -45,7 +51,8 @@ trusted_ca_client_auth_file: "/Common/uat-corapi-int.crt"
 
 server_ssl_profile: "serverssl-{{ obj_name }}"
 server_cert_require: "require"    #"ignore", "require", "request"
-
+use_server_trusted_cert_authority: true
+trusted_ca_server_auth_file: "/Common/uat-corapi-int.crt"
 
 # SNAT Pool Configuration
 snat_pool_name: "snat-{{ obj_name }}"

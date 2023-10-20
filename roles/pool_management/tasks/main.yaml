@@ -13,7 +13,7 @@
     pool: "{{ pool_name }}"
     partition: "{{ selected_partition }}"
     name: "{{ item.node_name }}"
-    host: "{{ item.ip }}"
+    host: "{{ address_type == 'ip' | ternary(item.ip, item.fqdn) }}"
     port: "{{ item.port }}"
     state: "{{ state }}"
     provider: "{{ common_provider }}"
