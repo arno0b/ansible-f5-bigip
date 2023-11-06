@@ -10,7 +10,7 @@ Open your terminal and clone the repository using the following command:
 git clone https://your-gitea-server.com/username/repository.git
 ```
 
-Replace https://your-gitea-server.com/username/repository.git with the URL of your Gitea repository.
+Replace ```https://your-gitea-server.com/username/repository.git``` with the URL of your Gitea repository.
 
 ### Navigate to the Repository Directory
 Change into the directory that was created by the clone operation:
@@ -18,7 +18,7 @@ Change into the directory that was created by the clone operation:
 ```sh
 cd repository
 ```
-Replace repository with the actual name of your repository directory.
+Replace ```repository``` with the actual name of your repository directory.
 
 ### Create a New Branch
 It's a good practice to create a new branch for your changes. You can do this with:
@@ -67,4 +67,4 @@ Push your new branch and changes to the Gitea server:
 ```sh
 git push -u origin test
 ```
-Replace test with the name of the branch you created. The ```-u``` flag sets the upstream for your branch, so in the future, you can simply use git push or git pull without specifying the branch.
+Replace ```test``` with the name of the branch you created. The ```-u``` flag sets the upstream for your branch, so in the future, you can simply use git push or git pull without specifying the branch.
