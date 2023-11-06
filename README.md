@@ -29,7 +29,7 @@ git checkout -b test
 Replace ```test``` with the name you want for your new branch.
 
 ### Copy the Required Files
-Use the cp command to copy files from your desired directory to the repository directory:
+Use the ```cp``` command to copy files from your desired directory to the repository directory:
 
 ```sh
 cp /path/to/your/files/* /path/to/repository/
@@ -42,7 +42,7 @@ Add the new files to your local Git repository for staging:
 ```sh
 git add .
 ```
-The . tells Git to add all the files in the current directory.
+```git add .``` used to add changes in the working directory to the staging area for the next commit. The ```.``` tells Git to add all the files in the current directory. It stages new files (files that Git hasn't tracked before) and modifications to files (files that have been changed since the last commit).
 
 ### Configure your Git user
 Set up your Git configuration with your username and email
