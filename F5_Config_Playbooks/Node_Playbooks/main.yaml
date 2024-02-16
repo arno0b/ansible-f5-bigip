@@ -1,0 +1,61 @@
+---
+- name: Create Nodes and FQDN Nodes in DR FINTECH UAT F5
+  hosts: druatf51a
+  gather_facts: no
+  tasks:
+    - name: Pull Node Metadata from inventory file for FQDN Nodes
+      include_vars:
+        file: /root/ansible_integration/ansible_f5/F5_Config_Playbooks/Node_Playbooks/NODE_FQDN_Inventory_Updated.yaml
+      tags: fqdn_nodes
+
+    - name: Create FQDN Nodes in DR UAT Fintech F5
+      bigip_node:
+        name: "{{ item.name }}"
+        fqdn: "{{ item.fqdn }}"
+        fqdn_auto_populate: "{{ item.fqdn_auto_populate }}"
+        partition: "{{ item.partition }}"
+        state: "{{ item.state }}"
+        monitors: "{{ item.monitors | default('/Common/none') }}"
+        provider:
+          server: 10.32.35.220
+          user: arnob
+          password: "N@98sDS@t" 
+          server_port: 443
+          validate_certs: no
+      delegate_to: localhost
+      with_items: "{{ node_fqdn_inventory_PR_UAT_FINTECH }}"
+      tags: fqdn_nodes
+
+    - name: Pull Node Metadata from inventory file for Standard Nodes
+      include_vars:
+        file: /root/ansible_integration/ansible_f5/F5_Config_Playbooks/Node_Playbooks/NODE_INVENTORY_UPDATE.yaml
+      tags: standard_nodes
+
+    - name: Create Nodes in DR UAT Fintech F5
+      bigip_node:
+        name: "{{ item.name }}"
+        address: "{{ item.address }}"
+        partition: "{{ item.partition }}"
+        state: "{{ item.state }}"
+        monitors: "{{ item.monitors | default('/Common/none') }}"
+        provider:
+          server: 10.32.35.220
+          user: arnob
+          password: "N@98sDS@t" 
+          server_port: 443
+          validate_certs: no
+      delegate_to: localhost
+      with_items: "{{ node_inventory_PR_UAT_FINTECH }}"
+      tags: standard_nodes
+
+    - name: Save the running configuration of the BIG-IP
+      bigip_config:
+        save: yes
+        provider:
+          server: 10.32.35.220
+          password: "N@98sDS@t" 
+          user: arnob
+          server_port: 443
+          validate_certs: no
+      delegate_to: localhost
+      tags: [fqdn_nodes, standard_nodes]
